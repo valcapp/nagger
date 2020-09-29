@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nagger App</title>
+
+    <!-- style -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600&display=swap" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/lib/font.css">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="imgs/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="imgs/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="imgs/favicon/favicon-16x16.png">
+    <link rel="manifest" href="imgs/favicon/site.webmanifest">
+
+    <!-- PapaParse -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script> -->
+    <script src="/lib/papa.min.js"></script>
+    <script src="/lib/plotly.min.js"></script>
+
+
+</head>
+<body>
+    <div class="nag-head">
+        <div class="title">
+            <svg height="100" width="100">
+                <circle cx="70" cy="50" r="30" stroke-width="0" fill="#A05"/>
+            </svg>
+            <svg height="200" width="200" class="info-button">
+                <circle cx="100" cy="100" r="100" stroke-width="0" fill="#e60073" />
+                <text x="10" y="90" fill="white" font-size="30px">Your</text>
+                <text x="30" y="140" fill="white" font-size="50px" font-wieight="bold">Nagger</text>
+
+                <circle cx="80" cy="180" r="10" fill="white" ></circle>
+                <!-- <circle cx="80" cy="180" r="10" stroke="#ffb3d9" stroke-width="1px" fill="#e60073" ></circle>
+                <text x="76" y="186" fill="#ffb3d9" font-size="18px" font-style="italic">i</text> -->
+            </svg>
+            <div class="intro-div hidden">
+                <p>It checks if you are working on your weaknesses. <br> Reminds you where you are and where to go.</p>
+            </div>
+            <!-- <h1>
+                Your personal
+                <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Nagger
+            </h1> -->
+        </div>
+
+        <div class="sections-menu">
+            <button type="button" class="ball scores-mi">See</button>
+            <button type="button" class="ball questions-mi active">Tell</button>
+            <button type="button" class="ball priorities-mi">Focus</button>
+            <!-- <button type="button" class="ball actions-mi">Action</button> -->
+        </div>
+    </div>
+
+
+
+    <div class="nag-section scores-div">
+        <h3>Where you are</h3>
+        <div class="radar-div"></div>
+        <div class="data-quality-div"></div>
+    </div>
+
+    <div class="nag-section questions-div active">
+        <h3>Tell me</h3>
+        <div class="questions-menu"></div>
+        <div class="questions-content"></div>
+        <!-- <div class="charts-content" id="donut-quality"></div> -->
+        <div class="save-answers">
+            <hr>
+            <button class="ball">Save Answers</button>
+        </div>
+    </div>
+
+    <div class="nag-section priorities-div">
+        <h3>Your focus</h3>
+    </div>
+
+    <!-- <div class="nag-section actions-div">
+        <h3>Just do it</h3>
+    </div> -->
+
+
+
+
+    <script src="ui.js"></script>
+    <script src="nagger.js"></script>
+    <script src="controller.js"></script>
+</body>
+</html>
+
