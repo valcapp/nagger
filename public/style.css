@@ -70,10 +70,7 @@ button.ball:hover{
     float:left;
     width:250px;
 }
-.questions-content{
-    display: inline-block;
-    width: 450px;
-}
+
 /* .questions-content div{
     display:block;
 } */
@@ -161,4 +158,26 @@ button.ball:hover{
 }
 div.modebar{
     display:none;
+}
+.questions-content{
+    /* display: inline-flex; */
+    min-width: 450px;
+    width: 70%;
+    justify-content: space-around;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    display:flex;
+}
+/* div.plot-container.plotly{
+} */
+div#donut-quality.js-plotly-plot{
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+    /* display: inline-block; */
+}
+div.text-area{
+    margin-left: 40px;
+    max-width: 460px;
+    /* flex-wrap: wrap; */
 }

@@ -2,16 +2,22 @@
 
 This web app allows the user to log data for self evaluation, it's like someone nagging you all the time asking you: are you doing this? Are you doing that?
 
+The cool thing is that it will nag you the way you want it to.
+
 ### Use
-Clone the repo locally and launch the node server locally:
+Clone the repo locally. Modify the questions.csv file in the /etch/csv/ direrctory the way you want and launch the node server locally:
 
 ```
-node app.js
+node run.js
 ```
 
 Alternatively you can double click on the .bat file.
 
-### Future Development
-At the moment it does not allow to customize the criteria, and areas of life are used as placeholder. The plan is to make them customizable by changing the questions.csv file in the /public/templates folder.
+As a note: make sure your question have a unique identifier *idq*.
 
-Also answers are saved in JSON format in the /public/data folder. In the future I hope to make them downloadable into csv format as well.
+### Future Development
+At the moment answers are saved in JSON format in the /public/data folder. In the future I hope to make them downloadable into csv format as well.
+
+The plan is also to have a section where you can visualise a radar diagram of how you are doing across the areas.
+
+Then another section where you can specify the level of priority each area for each target, so that the nagger will ask the questions in the order that is more relevant for you.

@@ -6,8 +6,14 @@ const port = 5000
 app.use(express.json())
 app.use(express.static('public'))
 
+const etch = require('./etch')
+
+app.get('/csv-etch',(req,res)=>{
+  res.json(etch) 
+})
+
 app.get('/', (req, res) => {
-  res.render('index.html')
+  res.render('index.html',JSON.stringify({questionsCSV}))
 })
 
 app.post('/answers',(req,res)=>{

@@ -4,9 +4,11 @@ class Ui{
         this.ctrl = ctrl;
         this.nagger = ctrl.nagger;
         this.head = new nagHead(this);
-        this.section = {
-            tell: new tellSection(this,this.nagger.questions)
-        }
+        this.nagger.etch.then(()=>{
+            this.section = {
+                tell: new tellSection(this,this.nagger.questions)
+            }
+        })
     }
 
     alertUser(key, error){
@@ -51,19 +53,15 @@ class nagHead{
             });
         });
     }
-        
+    
 
 }
 
-
-
 class tellSection{
-
     constructor(ui,questions){
         this.ui = ui
         this.questions = questions
         this.domDiv = document.querySelector(`.nag-section.questions-div`)
-        this.promises = new Map()
         // menu
         this.menu = this.domDiv.querySelector('.questions-menu')
         this.menuLevels = ['area','target']
@@ -162,17 +160,14 @@ class tellSection{
         this.checkSelected(Array.from(this.menuTree.keys()))
         this.wipeContent()
         const focus = this.readFocusItem()
-        this.content.innerHTML = focus? `<h4> ... about ${focus.item}</h4>` : `<h4> ... overall</h4>`
-        this.ui.ctrl.whenReady(
-            () => this.ui.nagger.waitingForAnswers(),
-            () => {
-                if (focus && focus.depth ==='target'){
-                    this.nextQuestion()
-                } else {
-                    this.showData()
-                }
+        this.textArea().innerHTML = focus? `<h4> ... about ${focus.item}</h4>` : `<h4> ... overall</h4>`
+        this.ui.nagger.loaded.then(()=>{
+            if (focus && focus.depth ==='target'){
+                this.nextQuestion()
+            } else {
+                this.showData()
             }
-        )     
+        }) 
     }
 
     readFocusItem(){
@@ -222,7 +217,7 @@ class tellSection{
         }else{
             const message = document.createElement('p')
             message.innerHTML = `Congratulations! You completed the answers for this target!`
-            this.content.append(message)
+            this.textArea().append(message)
         }
     }
 
@@ -233,7 +228,7 @@ class tellSection{
         const answerDiv = document.createElement('div')
         const answers = ['yes','no'].forEach(a=>answerDiv.append(this.createAnswerButton(question.idq,a)) )
         qDiv.append(answerDiv)
-        this.content.append(qDiv)
+        this.textArea().append(qDiv)
     }
 
     createAnswerButton(idq,answer){
@@ -246,18 +241,9 @@ class tellSection{
 
     answerQuestion(idq,answer){
         this.ui.nagger.answer(idq,answer);
-        this.content.querySelectorAll('.ask-question').forEach(q=>q.remove())
+        this.textArea().querySelectorAll('.ask-question').forEach(q=>q.remove())
         this.nextQuestion();
     }
-
-    // whenReady(dependency,callback){
-    //     const data = dependency();
-    //     if (data.hasOwnProperty('wait')) {
-    //         this.ui.ctrl.addPromise(data.wait,callback)
-    //     } else {
-    //         return callback()
-    //     }      
-    // }
 
     showData(tell=true){
         const focus = this.readFocusItem()
@@ -270,8 +256,18 @@ class tellSection{
         this.donut.refresh(data)
     }
 
+    textArea(){
+        let textArea = this.content.querySelector('.text-area')
+        if(!textArea){
+            textArea = document.createElement('div')
+            textArea.classList.add('text-area')
+            this.content.appendChild(textArea)
+        }
+        return textArea
+    }
+
     tellData(data){
-        this.content.innerHTML += `<p> I know ${data.quality}% of potential data.
+        this.textArea().innerHTML += `<p> I know ${data.quality}% of potential data.
         To increase the percentage, select a specific area and answer the questions.</p>
         <p>Based on what I know, your current score is ${data.score}.</p>`
     }
@@ -339,6 +335,7 @@ class PlotlyDonut{
             donutDiv = document.createElement('div')
             donutDiv.setAttribute("id",`donut-${varTitle}`)
             this.contentDiv.appendChild(donutDiv)
+            this.contentDiv.insertBefore(donutDiv, this.contentDiv.childNodes[0] || null);
         }
     }
 }
