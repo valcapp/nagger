@@ -97,14 +97,14 @@ button.ball:hover{
     background-color: #e60073;
     color: white;
 }
-.questions-menu-button.target-level{
+.questions-menu-button.target-depth{
     margin-left:30px;
     padding: 2px 20px;
 }
-.questions-menu-button.target-level:hover{
+.questions-menu-button.target-depth:hover{
     margin-left:40px;
 }
-.questions-menu-button.target-level.selected{
+.questions-menu-button.target-depth.selected{
     background-color: #A05;
     color: white;
 }

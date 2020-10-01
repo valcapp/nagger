@@ -108,8 +108,7 @@ const headedArray = inputArray => {
 
 class Nagger{
 
-    constructor(ctrl){
-        this.ctrl = ctrl
+    constructor(){
         this.weeksCadence = 6
         this.parsedAnswer = new Map([
             ['yes',true],
@@ -124,7 +123,6 @@ class Nagger{
             .then ( etch => {
                 this.questions = headedArray(Papa.parse(etch.questions).data)
                 this.descriptions = headedArray(Papa.parse(etch.descriptions).data)
-                console.log(this.questions)
             })
     }
 
@@ -179,13 +177,13 @@ class Nagger{
             .then(response => response.json())
             .then(data => {
                 if (data === 'success'){
-                    this.ctrl.ui.alertUser('save-answers-success')
+                    this.ui.alertUser('save-answers-success')
                 } else {
-                    this.ctrl.ui.alertUser('save-answers-failure')
+                    this.ui.alertUser('save-answers-failure')
                 }
             })
             .catch((error) => {
-                this.ctrl.ui.alertUser('save-answers-failure', error)
+                this.ui.alertUser('save-answers-failure', error)
                 // console.error('Error:', error);
             });
     }
