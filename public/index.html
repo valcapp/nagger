@@ -50,8 +50,8 @@
         </div>
 
         <div class="sections-menu">
-            <button type="button" class="ball scores-mi">See</button>
-            <button type="button" class="ball questions-mi active">Tell</button>
+            <button type="button" class="ball see-mi">See</button>
+            <button type="button" class="ball tell-mi active">Tell</button>
             <!-- <button type="button" class="ball priorities-mi">Focus</button> -->
             <!-- <button type="button" class="ball actions-mi">Action</button> -->
         </div>
@@ -59,35 +59,36 @@
 
 
 
-    <div class="nag-section scores-div">
+    <div class="section-div see-div">
         <h3>Where you are</h3>
-        <div class="radar-div"></div>
-        <div class="data-quality-div"></div>
+        <div class="menu-div"></div>
+        <div class="content-div"></div>
     </div>
 
-    <div class="nag-section questions-div active">
-        <h3>Tell me</h3>
-        <div class="questions-menu"></div>
-        <div class="questions-content"></div>
-        <!-- <div class="charts-content" id="donut-quality"></div> -->
+    <div class="section-div tell-div active">
+        <h3>How are you doing?</h3>
+        <div class="menu-div"></div>
+        <div class="content-div"></div>
         <div class="save-answers">
             <hr>
             <button class="ball">Save Answers</button>
         </div>
     </div>
 
-    <div class="nag-section priorities-div">
+    <div class="section-div priorities-div">
         <h3>Your focus</h3>
     </div>
 
-    <!-- <div class="nag-section actions-div">
+    <!-- <div class="section-div actions-div">
         <h3>Just do it</h3>
     </div> -->
 
 
 
 
-    <script src="section.js"></script>
+    <script src="/sections/section.js"></script>
+    <script src="/sections/see.js"></script>
+    <script src="/sections/tell.js"></script>
     <script src="ui.js"></script>
     <script src="nagger.js"></script>
     <script src="index.js"></script>

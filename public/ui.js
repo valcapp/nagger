@@ -6,6 +6,7 @@ class Ui{
         this.head = new nagHead(this);
         this.nagger.etch.then(()=>{
             this.section = {
+                see: new seeSection(this),
                 tell: new tellSection(this)
             }
         })
@@ -49,7 +50,7 @@ class nagHead{
                 targetDiv = document.getElementsByClassName(targetClassName)[0]
             el.addEventListener('click',()=>{
                 this.switchBrother(el,'.sections-menu button');
-                this.switchBrother(targetDiv,'.nag-section')
+                this.switchBrother(targetDiv,'.section-div')
             });
         });
     }

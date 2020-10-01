@@ -28,9 +28,11 @@ h3{
     text-align: center;
     height:80px;
 }
+
 button:focus{
     outline:none;
 }
+
 button.ball {
     height: 60px;
     width: 60px;
@@ -58,15 +60,15 @@ button.ball:hover{
     font-size:20px;
     margin-top: 0px;
 }
-.nag-section, .questions-menu-button{
+.section-div, .menu-button{
     display:none;
     height:100%;
 }
-.nag-section.active, .questions-menu-button.active{
+.section-div.active, .menu-button.active{
     display:block;
 }
 
-.questions-menu{
+.menu-div{
     float:left;
     width:250px;
 }
@@ -74,7 +76,7 @@ button.ball:hover{
 /* .questions-content div{
     display:block;
 } */
-.questions-menu-button{
+.menu-div .menu-button{
     height: 20px;
     width: 140px;
     border-bottom: 1px solid rgba(170, 0, 85,0.2);
@@ -85,7 +87,7 @@ button.ball:hover{
     align-items: center;
     transition-duration: 0.2s;
 }
-.questions-menu-button:hover{
+.menu-div .menu-button:hover{
     color:  #e60073;
     /* border: 1px solid #ff99cc; */
     margin-left: 20px;
@@ -93,18 +95,18 @@ button.ball:hover{
     border-right: 4px solid #e60073;
     cursor: pointer;
 }
-.questions-menu-button.selected{
+.menu-div .menu-button.selected{
     background-color: #e60073;
     color: white;
 }
-.questions-menu-button.target-depth{
+.menu-div .menu-button.target-depth{
     margin-left:30px;
     padding: 2px 20px;
 }
-.questions-menu-button.target-depth:hover{
+.menu-div .menu-button.target-depth:hover{
     margin-left:40px;
 }
-.questions-menu-button.target-depth.selected{
+.menu-div .menu-button.target-depth.selected{
     background-color: #A05;
     color: white;
 }
