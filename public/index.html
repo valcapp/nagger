@@ -9,6 +9,7 @@
     <!-- <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;600&display=swap" rel="stylesheet"> -->
     <link rel="stylesheet" href="/lib/font.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="layout.css">
 
     <!-- favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="imgs/favicon/apple-touch-icon.png">
@@ -35,23 +36,15 @@
                 <text x="30" y="140" fill="white" font-size="50px" font-wieight="bold">Nagger</text>
 
                 <circle cx="80" cy="180" r="10" fill="white" ></circle>
-                <!-- <circle cx="80" cy="180" r="10" stroke="#ffb3d9" stroke-width="1px" fill="#e60073" ></circle>
-                <text x="76" y="186" fill="#ffb3d9" font-size="18px" font-style="italic">i</text> -->
             </svg>
             <div class="intro-div hidden">
                 <p>It checks if you are working on your weaknesses. <br> Reminds you where you are and where to go.</p>
             </div>
-            <!-- <h1>
-                Your personal
-                <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Nagger
-            </h1> -->
         </div>
 
         <div class="sections-menu">
-            <button type="button" class="ball see-mi">See</button>
-            <button type="button" class="ball tell-mi active">Tell</button>
+            <button type="button" class="ball see-mi active">See</button>
+            <button type="button" class="ball tell-mi">Tell</button>
             <!-- <button type="button" class="ball priorities-mi">Focus</button> -->
             <!-- <button type="button" class="ball actions-mi">Action</button> -->
         </div>
@@ -59,13 +52,17 @@
 
 
 
-    <div class="section-div see-div">
+    <div class="section-div see-div active">
         <h3>Where you are</h3>
         <div class="menu-div"></div>
         <div class="content-div"></div>
+        <div class="save-answers">
+            <hr>
+            <button class="ball">Tell Me More</button>
+        </div>
     </div>
 
-    <div class="section-div tell-div active">
+    <div class="section-div tell-div">
         <h3>How are you doing?</h3>
         <div class="menu-div"></div>
         <div class="content-div"></div>
@@ -75,9 +72,9 @@
         </div>
     </div>
 
-    <div class="section-div priorities-div">
+    <!-- <div class="section-div priorities-div">
         <h3>Your focus</h3>
-    </div>
+    </div> -->
 
     <!-- <div class="section-div actions-div">
         <h3>Just do it</h3>

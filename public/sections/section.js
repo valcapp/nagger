@@ -110,6 +110,10 @@ class Menu{
         return this.checkSelected(Array.from(this.section.menu.tree.keys()))
     }
 
+    getNextDepthItems(focusItem='root'){
+        return this.tree.get(focusItem)
+    }
+
 }
 
 
@@ -117,6 +121,7 @@ class Content{
     constructor(section){
         this.section = section
         this.ui = this.section.ui
+        this.domDiv = this.section.domDiv
         this.domDiv = this.section.domDiv.querySelector('.content-div')
         this.section.menu.domDiv.addEventListener('click',()=>this.reviewContent());
         // this.reviewContent()
@@ -125,7 +130,7 @@ class Content{
     reviewContent(){
         this.ui.nagger.loaded.then(()=> {
             this.wipeContent()
-            this.focus = focus = this.readFocus()
+            this.focus =  this.readFocus()
             this.generateContent()
         })  
     }
@@ -139,15 +144,17 @@ class Content{
     }
 
     readFocus(){
-        const focusItem = this.section.menu.reviewSelected()
-        let focus
+        const focusItem = this.section.menu.reviewSelected()      
+        return this.parseFocus(focusItem)
+    }
+
+    parseFocus(focusItem){
         if (focusItem){
-            focus = {
+            return {
                 depth: Array.from(focusItem.classList).find(c=>c.includes('-depth')).replace('-depth',''),
                 item: focusItem.innerHTML
             }
         }
-        return focus
     }
 
     textArea(){
@@ -160,5 +167,93 @@ class Content{
         return textArea
     }
 
+    nextDepth(){
+        const focusItem = this.section.menu.reviewSelected()
+        const nextDepthItems = this.section.menu.getNextDepthItems(focusItem)
+        return nextDepthItems.map( item => this.parseFocus(item) )
+    }
+
 }
 
+
+class PlotlyChart{
+    constructor(homeDiv, idTag){
+        this.homeDiv = homeDiv
+        this.idTag = idTag
+    }
+
+    getData(data){}
+
+    getLayout() {}
+
+    refresh(data){
+        this.prepareCanvas()
+        Plotly.newPlot(this.idTag,this.getData(data),this.getLayout())
+    }
+
+    prepareCanvas(){
+        let canvas = this.homeDiv.querySelector(`#${this.idTag}`)
+        if(!canvas){
+            canvas = document.createElement('div')
+            canvas.setAttribute("id",`${this.idTag}`)
+            this.homeDiv.insertBefore(canvas, this.homeDiv.childNodes[0] || null);
+        }
+    }
+}
+
+class ScoreSvg{
+    constructor(homeDiv,radius=40){
+        this.homeDiv = homeDiv
+        this.radius = radius
+        this.ns = "http://www.w3.org/2000/svg"
+    }
+
+    refresh(data){
+        this.text(data)
+    }
+
+    svg(){
+        let svg
+        svg = this.homeDiv.querySelector(`.score-svg`)
+        if(!svg){
+            svg = document.createElementNS(this.ns, "svg")
+            svg.setAttribute("height",`${2*this.radius}`)
+            svg.setAttribute("width",`${2*this.radius}`)
+            svg.setAttribute("class",`score-svg`)
+            let circle = document.createElementNS(this.ns,'circle')
+            circle.setAttribute('cx',`${this.radius}`)
+            circle.setAttribute('cy',`${this.radius}`)
+            circle.setAttribute('r',`${this.radius}`)
+            circle.setAttribute('stroke-width',`0`)
+            circle.setAttribute('fill',"#A05")
+            svg.appendChild(circle)
+            this.homeDiv.appendChild(svg)
+            // window.onload = ()=> {
+            //     const plot = this.homeDiv.querySelector('.js-plotly-plot')
+            //     this.homeDiv.insertBefore(svg, plot.nextSibling)
+            // };   
+        }
+        return svg
+    }
+
+    text(data){
+        const svg = this.svg()
+        let text = svg.querySelector('.score-text')
+        if(!text){
+            text = document.createElementNS(this.ns,'text')
+            text.classList.add('score-text')
+            text.setAttribute("x",`50%`)
+            text.setAttribute("y",`50%`)
+            text.setAttribute("dominant-baseline","middle")
+            text.setAttribute("text-anchor","middle")
+             
+            // text.setAttribute("x",`${this.radius*0.71}`)
+            // text.setAttribute("y",`${this.radius*1.3}`)
+            text.setAttribute("font-size",`${this.radius}px`)
+            text.setAttribute("fill","white")
+            svg.appendChild(text)
+        }
+        text.innerHTML = data.toFixed(1)
+    }
+
+}

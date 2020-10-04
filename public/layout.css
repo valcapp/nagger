@@ -1,0 +1,13 @@
+.menu-div{
+    display: inline-block;
+}
+
+.content-div{
+    display: inline-block;
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.js-plotly-plot{
+    display: inline-block;
+}

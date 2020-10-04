@@ -25,22 +25,23 @@ class tellContent extends Content{
 
     showData(tell=true){
         const focus = this.focus
-        const data = this.ui.nagger.checkAnswers(focus)
-        this.showDonut(data)
-        if(tell){this.tellData(data)}
+        const accuracy = this.ui.nagger.assessQuality(focus)
+        const score = this.ui.nagger.assessScore(focus)
+        this.showDonut(accuracy)
+        if(tell){this.tellData(score,accuracy)}
     }
 
     showDonut(data){
         if (!this.donut){
-            this.donut = new PlotlyDonut(this.domDiv)
+            this.donut = new PlotlyDonut(this.domDiv,'ply-donut-canvas')
         }
         this.donut.refresh(data)
     }
 
-    tellData(data){
-        this.textArea().innerHTML += `<p> I know ${data.quality}% of potential data.
+    tellData(score,accuracy){
+        this.textArea().innerHTML += `<p> I know ${accuracy}% of potential data.
         To increase the percentage, select a specific area and answer the questions.</p>
-        <p>Based on what I know, your current score is ${data.score}.</p>`
+        <p>Based on what I know, your current score is ${score.toFixed(1)}.</p>`
     }
 
     nextQuestion(){
@@ -59,7 +60,7 @@ class tellContent extends Content{
         const focus = this.focus
         const today = new Date()
         const cadence = this.ui.nagger.weeksCadence * 1000 * 60 * 60 * 24 * 7 // millisends by seconds by hours by day by week
-        const unanswered = this.ui.nagger.checkAnswers(focus).answers.filter( a => (today-a.date) > cadence || typeof a.date === 'undefined')
+        const unanswered = this.ui.nagger.queryAnswers(focus).answers.filter( a => (today-a.date) > cadence || typeof a.date === 'undefined')
         const randomQuestion = unanswered[Math.floor(Math.random()*unanswered.length)]
         if(randomQuestion){
             return randomQuestion.idq
@@ -92,10 +93,7 @@ class tellContent extends Content{
 }
 
 
-class PlotlyDonut{
-    constructor(contentDiv){
-        this.contentDiv = contentDiv
-    }
+class PlotlyDonut extends PlotlyChart{
 
     dataSchema = {
         hoverinfo: 'label+percent+name',
@@ -106,36 +104,27 @@ class PlotlyDonut{
         },
     }
 
-    getData(data,varb){
-        if (varb === 'score') {
-            return[{
-                ...this.dataSchema,
-                values: [5-data.score,data.score],
-                labels: ['to do','achieved'],
-                name: 'Score'
-            }]
-        } else if (varb === 'quality'){
-            return[{
-                ...this.dataSchema,
-                values: [100-data.quality,data.quality],
-                labels: ['unknown','known'],
-                name: 'Data Completion'
-            }]
-        }
+    getData(data){
+        return[{
+            ...this.dataSchema,
+            values: [100-data,data],
+            labels: ['unknown','known'],
+            name: 'available data'
+        }]
     }
 
     getLayout(varTitle) {
         return{
             height: 300,
             width: 300,
-            title: varTitle,
+            title: 'I know...',
             annotations: [
                 {
                     font: {
                     size: 12
                     },
                     showarrow: false,
-                    text: 'Completion',
+                    text: 'Accuracy',
                     x: 0.5,
                     y: 0.5
                 }
@@ -143,18 +132,18 @@ class PlotlyDonut{
         }
     }
 
-    refresh(data){
-        this.prepareCanvas('quality')
-        Plotly.newPlot(`donut-quality`,this.getData(data,'quality'),this.getLayout('Data Completion'))
-    }
+    // refresh(data){
+    //     this.prepareCanvas('quality')
+    //     Plotly.newPlot(`donut-quality`,this.getData(data,'quality'),this.getLayout('Data Completion'))
+    // }
 
-    prepareCanvas(varTitle){
-        let donutDiv = this.contentDiv.querySelector(`#donut-${varTitle}`)
-        if(!donutDiv){
-            donutDiv = document.createElement('div')
-            donutDiv.setAttribute("id",`donut-${varTitle}`)
-            this.contentDiv.appendChild(donutDiv)
-            this.contentDiv.insertBefore(donutDiv, this.contentDiv.childNodes[0] || null);
-        }
-    }
+    // prepareCanvas(varTitle){
+    //     let donutDiv = this.homeDiv.querySelector(`#donut-${varTitle}`)
+    //     if(!donutDiv){
+    //         donutDiv = document.createElement('div')
+    //         donutDiv.setAttribute("id",`donut-${varTitle}`)
+    //         this.homeDiv.appendChild(donutDiv)
+    //         this.homeDiv.insertBefore(donutDiv, this.homeDiv.childNodes[0] || null);
+    //     }
+    // }
 }
