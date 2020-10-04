@@ -15,7 +15,6 @@ Alternatively you can double click on the .bat file.
 
 As a note: make sure your question have a unique identifier *idq* and preferrably the names of the areas and targets are one word long. You can add a longer description in the /etch/csv/descriptions.csv file.
 
-### Future Development
-At the moment answers are saved in JSON format in the /public/data folder. In the future answers will be saved in a non-public folder, potentially in a .csv format.
+### Future Developments
 
-The plan is to have another section where user can specify the level of priority for each area for each target, so that the nagger will ask the questions in the order that is more relevant for the user.
+The plan is to have another section where the user can specify the level of priority for each area for each target, so that the nagger will ask the questions in the order that is more relevant for the user.

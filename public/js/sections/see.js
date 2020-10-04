@@ -15,7 +15,7 @@ class seeContent extends Content{
     }
 
     generateContent(){
-        this.textArea().innerHTML = this.focus? `<h4> ... about ${this.focus.item}</h4>` : `<h4> ... overall</h4>`
+        this.textArea().innerHTML = this.focus? `<h3>${this.focus.item}</h3>` : `<h3>Overall</h3>`
         this.showData()
     }
 

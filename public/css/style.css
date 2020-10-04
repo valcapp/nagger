@@ -17,6 +17,8 @@ div.title{
 }
 h3{
     color: #e60073;
+}
+h3.underlined{
     border-bottom: solid 0.5px #A05;
 }
 

@@ -228,10 +228,6 @@ class ScoreSvg{
             circle.setAttribute('fill',"#A05")
             svg.appendChild(circle)
             this.homeDiv.appendChild(svg)
-            // window.onload = ()=> {
-            //     const plot = this.homeDiv.querySelector('.js-plotly-plot')
-            //     this.homeDiv.insertBefore(svg, plot.nextSibling)
-            // };   
         }
         return svg
     }

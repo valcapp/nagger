@@ -39,6 +39,28 @@ class Nagger{
             })
     }
 
+    loadAnswers(){
+        this.log = fetch('/answers-csv')
+            .then(response => response.json())
+            .then( data => {
+                // console.log(data)
+                const answers = headedArray(Papa.parse(data.answers).data)
+                this.answers = this.readLoadedAnswers(answers)
+            })
+    }
+
+    load(){
+        this.loadEtch()
+        // this.loadLog()
+        this.loadAnswers()
+        this.loaded = new Promise( resolve =>{
+            this.etch.then(()=>{
+                this.log.then(resolve)
+            })
+        })
+        // this.testLoad()
+    }
+
     getDepths(questions){
         let depths = Object.keys(questions[0]).filter( key => !['idq','question','level'].includes(key))
         let sizes = depths.map( depth => { 
@@ -70,24 +92,6 @@ class Nagger{
         }
     }
 
-    loadLog(){
-        this.log = fetch('./data/json/answers.json')
-            .then(response => response.json())
-            .then( data => {
-                this.answers = this.convertDates(data)
-            }) 
-    }
-
-    load(){
-        this.loadEtch()
-        this.loadLog()
-        this.loaded = new Promise( resolve =>{
-            this.etch.then(()=>{
-                this.log.then(resolve)
-            })
-        })
-        // this.testLoad()
-    }
 
     // testLoad(){ 
     //     console.log(this.loaded)
@@ -96,8 +100,11 @@ class Nagger{
     //     })
     // }
 
-    convertDates(answers){
-        answers.forEach( ans => ans.date = new Date(ans.date))
+    readLoadedAnswers(answers){
+        answers.forEach( ans => {
+            ans.answer = ans.answer.toLowerCase() === 'true'? true : false
+            ans.date = new Date(ans.date)
+        })
         return answers
     }
 
@@ -108,14 +115,14 @@ class Nagger{
             date: new Date()
         })
     }
-
+    
     saveAnswers(){
-        const data = this.answers;
-        fetch('/answers', {
-            method: 'POST', 
-            headers: {
-                    'Content-Type': 'application/json',
-                },
+        const data = {answers: Papa.unparse(this.answers)};
+        fetch('/answers-csv', {
+                method: 'POST',
+                headers: {
+                        'Content-Type': 'application/json',
+                    },
                 body: JSON.stringify(data),
             })
             .then(response => response.json())
