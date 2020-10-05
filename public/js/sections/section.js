@@ -170,7 +170,9 @@ class Content{
     nextDepth(){
         const focusItem = this.section.menu.reviewSelected()
         const nextDepthItems = this.section.menu.getNextDepthItems(focusItem)
-        return nextDepthItems.map( item => this.parseFocus(item) )
+        if(nextDepthItems){
+            return nextDepthItems.map( item => this.parseFocus(item) )
+        }
     }
 
 }
@@ -180,6 +182,7 @@ class PlotlyChart{
     constructor(homeDiv, idTag){
         this.homeDiv = homeDiv
         this.idTag = idTag
+        this.color = typeof clr2 === 'undefined'? '#e60073' : clr2
     }
 
     getData(data){}
@@ -206,6 +209,7 @@ class ScoreSvg{
         this.homeDiv = homeDiv
         this.radius = radius
         this.ns = "http://www.w3.org/2000/svg"
+        this.color = typeof clr2 === 'undefined'? '#A05' : clr2
     }
 
     refresh(data){
@@ -225,7 +229,7 @@ class ScoreSvg{
             circle.setAttribute('cy',`${this.radius}`)
             circle.setAttribute('r',`${this.radius}`)
             circle.setAttribute('stroke-width',`0`)
-            circle.setAttribute('fill',"#A05")
+            circle.setAttribute('fill',this.color)
             svg.appendChild(circle)
             this.homeDiv.appendChild(svg)
         }
@@ -242,9 +246,6 @@ class ScoreSvg{
             text.setAttribute("y",`50%`)
             text.setAttribute("dominant-baseline","middle")
             text.setAttribute("text-anchor","middle")
-             
-            // text.setAttribute("x",`${this.radius*0.71}`)
-            // text.setAttribute("y",`${this.radius*1.3}`)
             text.setAttribute("font-size",`${this.radius}px`)
             text.setAttribute("fill","white")
             svg.appendChild(text)

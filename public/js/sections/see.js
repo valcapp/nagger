@@ -23,14 +23,17 @@ class seeContent extends Content{
         const focus = this.focus
         const score = this.ui.nagger.assessScore(focus)
         const accuracy = this.ui.nagger.assessQuality(focus)
-        const childrenScores = this.nextDepth().map( i => {
-            return{
-                name: i.item,
-                score: this.ui.nagger.assessScore(i)
-            } 
-        })
         this.showScore(score)
-        this.showRadar(childrenScores)
+        const children = this.nextDepth()
+        if (children){
+            const childrenScores = children.map( i => {
+                return{
+                    name: i.item,
+                    score: this.ui.nagger.assessScore(i)
+                } 
+            })
+            this.showRadar(childrenScores)
+        }
         if(tell){this.tellData(score,accuracy)}
     }
 
@@ -82,7 +85,7 @@ class PlotlyRadar extends PlotlyChart{
             theta: data.theta,
             fill: 'toself',
             marker: {
-                color: '#e60073'
+                color: this.color
             }
         }]
     }

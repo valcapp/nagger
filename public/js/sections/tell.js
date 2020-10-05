@@ -100,7 +100,8 @@ class PlotlyDonut extends PlotlyChart{
         hole: .8,
         type: 'pie',
         marker: {
-            colors: ['#DCDCDC','#e60073']
+            // colors: ['#DCDCDC','#e60073']
+            colors: ['#DCDCDC',this.color]
         },
     }
 
