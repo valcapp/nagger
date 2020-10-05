@@ -18,7 +18,7 @@ app.post('/answers-csv',(req,res)=>{
   // const data = JSON.stringify(req.body,null,4)
   // data = JSON.stringify(req.body)
   const data = req.body.answers
-  console.log(data)
+  // console.log(data)
   fs.writeFile(__dirname+'/data/answers/answers.csv', data, error => {
     if (error) {
       console.log(error)

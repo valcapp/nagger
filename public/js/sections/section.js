@@ -182,7 +182,7 @@ class PlotlyChart{
     constructor(homeDiv, idTag){
         this.homeDiv = homeDiv
         this.idTag = idTag
-        this.color = typeof clr2 === 'undefined'? '#e60073' : clr2
+        this.color = typeof colors === 'undefined'? '#e60073' : colors.radar
     }
 
     getData(data){}
@@ -209,7 +209,7 @@ class ScoreSvg{
         this.homeDiv = homeDiv
         this.radius = radius
         this.ns = "http://www.w3.org/2000/svg"
-        this.color = typeof clr2 === 'undefined'? '#A05' : clr2
+        this.color = typeof colors === 'undefined'? '#A05' : colors.score
     }
 
     refresh(data){

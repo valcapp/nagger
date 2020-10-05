@@ -23,12 +23,18 @@ class tellContent extends Content{
         }
     }
 
-    showData(tell=true){
+    getData(){
         const focus = this.focus
         const accuracy = this.ui.nagger.assessQuality(focus)
         const score = this.ui.nagger.assessScore(focus)
-        this.showDonut(accuracy)
-        if(tell){this.tellData(score,accuracy)}
+        return {score,accuracy}
+    }
+
+    showData(tell=true){
+        const data = this.getData()
+        this.showDonut(data.accuracy)
+        if(tell){this.tellData(data.score,data.accuracy)}
+        return data
     }
 
     showDonut(data){
@@ -45,26 +51,58 @@ class tellContent extends Content{
     }
 
     nextQuestion(){
-        this.showData(false)
+        this.textArea().querySelectorAll('.ask-question, .complete-message').forEach(q=>q.remove())
+        const data = this.showData(false)
         const question = this.ui.nagger.questions.find( q => q.idq === this.pickIdq() ) 
         if (question){
             this.askQuestion(question)
-        }else{
-            const message = document.createElement('p')
-            message.innerHTML = `Congratulations! You completed the answers for this target!`
-            this.textArea().append(message)
+        } else if (data.accuracy === 100){
+            this.targetCompleted()
+        } else {
+            this.nextQuestion()
         }
     }
 
+    targetCompleted(){
+        const div = document.createElement('p')
+        div.classList.add("complete-message")
+        const message = document.createElement('p')
+        message.innerHTML = `Congratulations! You completed the answers for this target!`
+        const button = document.createElement('button')
+        button.innerHTML = "Review Answers"
+        button.classList.add("ball","review-answers")
+        const focus = this.readFocus()
+        button.addEventListener('click', () => {
+            this.review = {...focus, date: new Date()}
+            this.nextQuestion()
+        })
+        div.append(message)
+        div.append(button)
+        this.textArea().append(div)
+    }
+
     pickIdq(){
-        const focus = this.focus
-        const today = new Date()
-        const cadence = this.ui.nagger.weeksCadence * 1000 * 60 * 60 * 24 * 7 // millisends by seconds by hours by day by week
-        const unanswered = this.ui.nagger.queryAnswers(focus).answers.filter( a => (today-a.date) > cadence || typeof a.date === 'undefined')
+        const focus = this.focus       
+        const unanswered = this.ui.nagger.queryAnswers(focus).answers.filter( this.dateFilter() )
         const randomQuestion = unanswered[Math.floor(Math.random()*unanswered.length)]
         if(randomQuestion){
             return randomQuestion.idq
         }
+    }
+
+    dateFilter(){
+        let filter
+        const now = new Date()
+        const cadence = this.ui.nagger.weeksCadence * 1000 * 60 * 60 * 24 * 7 // millisends by seconds by hours by day by week
+        filter = a => typeof a.date === 'undefined' || (now.getTime()-a.date.getTime()) > cadence
+        if (this.review && Object.keys(focus).every(k=>focus[k]===this.review[k]) ){
+            filter = a => {
+                console.log("review date: ", this.review.date) 
+                console.log("answer date:", a.date) 
+                return typeof a.date === 'undefined' || this.review.date.getTime() > a.date.getTime()
+            }
+        }
+        return filter
     }
 
     askQuestion(question){
@@ -87,7 +125,6 @@ class tellContent extends Content{
 
     answerQuestion(idq,answer){
         this.ui.nagger.answer(idq,answer);
-        this.textArea().querySelectorAll('.ask-question').forEach(q=>q.remove())
         this.nextQuestion();
     }
 }

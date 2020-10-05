@@ -2,30 +2,33 @@ html, body{
     color: #003725CC;
 }
 .clr-1{
-    fill:#A05;
+    fill:#86b300;
 }
 .clr-2{
-    fill: #2D8259;
+    fill: #A05;
 }
 .clr-3{
     fill: #006A4D;
 }
 h3{
-    color: #A05;
+    color: #2D8259;
 }
 h3.underlined{
-    border-bottom: solid 0.5px #006A4D;
+    border-bottom: solid 0.5px #86b300;
+}
+.content-div h3{
+    color: #A05;
 }
 button.ball {
-    border: 1px solid #006A4D;
-    color:  #006A4D;
+    border: 1px solid #2D8259;
+    color:  #2D8259;
 }
 button.ball.active {
-    background-color:  #006A4D;
+    background-color:  #2D8259;
     color: white;
 }
 button.ball:hover{
-    border: 2px solid  #006A4D;
+    border: 2px solid  #2D8259;
 }
 .menu-div .menu-button{
     border-bottom: 1px solid rgba(45, 130, 89,0.2);
@@ -33,8 +36,8 @@ button.ball:hover{
 }
 .menu-div .menu-button:hover{
     color:  #2D8259;
-    border-bottom: 1px solid #A05;
-    border-right: 4px solid #A05;
+    border-bottom: 1px solid #86b300;
+    border-right: 4px solid #86b300;
 }
 .menu-div .menu-button.selected{
     background-color: #2D8259;
@@ -56,7 +59,22 @@ button.ball:hover{
 .save-answers hr{
     border-top: 0.3px solid rgba(45, 130, 89,0.2);
 }
+.save-answers button.ball{
+    color: #A05;
+    border: solid 1px #A05;
+}
 .save-answers button.ball:hover{
+    background-color: #A05;
+    color: white;
+}
+button.ball.review-answers{
+    color: #006A4D;
+    border: solid 1px #006A4D;
+}
+button.ball.review-answers:hover{
+    margin-top: 10px;
+    transform: scale(1.2);
     background-color: #006A4D;
     color: white;
+    border: none;
 }
